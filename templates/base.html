@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Random Twitch Stream Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+    <h1>Random Twitch Stream Generator</h1>
+</head>
+<body>
+<p> This webapp uses the Twitch API to search for a random stream by taking the Top 100 streams of the Top 200 Games and then chooses one 
+    randomly from a pool of up to 20,000 streams. It also has multiple options to narrow down the search pool to fit the needs of each user. 
+    This app was created to replace a removed feature Twitch had years ago that would redirect the user to a random stream which was a 
+    great way to find smaller streamers. While this app is limited in terms of its search pool, it offers options to specify the search criteria 
+    and hopefully offer better results.</p>
+
+<form action="{{ url_for('result') }}", method="post">
+    {{ form.hidden_tag() }}
+    <br>
+
+    <label class="container" for="lang">Language:
+        {{ form.lang }}
+    </label>
+
+    <label class="container" for="top_games"># of Top Game(s):
+        {{ form.top_games (placeholder='1-200')}}
+    </label>
+
+    <label class="container" for="yes_games">Only include game(s) in search:
+        {{ form.yes_games (size=100, placeholder='Separate each game title with a ","', value="")}}
+    </label>
+
+    <label class="container" for="no_games">Exclude game(s) in search:
+        {{ form.no_games (size=100, placeholder='Separate each game title with a ","')}}
+    </label>
+
+    <p class="container">Tags:</p>
+
+    <label class="container" for="FF">Family Friendly:
+        {{ form.FF (value="True") }}
+    </label>
+
+    <label class="container" for="charity">Charity Streams:
+        {{ form.charity (value="True")}}
+    </label>
+
+    <label class="container" for="CC">Closed Captions:
+        {{ form.CC }}
+    </label>
+        
+    <label class="container" for="v_tuber">V-Tuber:
+        {{ form.v_tuber }}
+    </label>
+
+    <label class="container" for="no_ad">No Sponsored Streams:
+        {{ form.no_ad (value="True")}}
+    </label>
+
+    <label class="container" for="tag">Custom Tag:
+        {{ form.tag (size=32)}}
+    </label>
+
+    <label class="container" for="min_viewers">Min Viewers:
+        {{ form.min_viewers }}
+    </label>
+
+    <label class="container" for="max_viewers">Max Viewers:
+        {{ form.max_viewers }}
+    </label>
+
+    <label class="container" for="submit">
+        {{ form.submit (class="submitButton", onclick="loadFunction()") }}
+    </label>
+
+</form>
+
+<div class="lds-ring" id="load"><div></div><div></div><div></div><div></div></div>
+{% block body %}{% endblock %}
+</body>
+
+<body class="center-align">
+    <span>
+        <h3>Instructions:</h3>
+        <h4>To find a random stream using the default settings simply click on the "Find Random Stream" button.
+            It is highly recommended that you select a language to provide better results!</h4>
+
+        <h4><u>Options:</u></h4>
+        <details>
+            <Summary>Primary Language</Summary>
+            <br>Select a Language from the list. Only streams that have their primary language for streaming set to the selected language will appear.<br> <br>
+        </details> 
+        <details> 
+            <summary># of Top Game(s)</summary> 
+                <br>Numeric value ranging from 1-200 with a default = 200. Only streams from the Top N Games on Twitch will appear where N = the 
+                number entered in the field. "Only include game(s) in search" takes precedence over this option.<br> <br>
+        </details>
+        <details> 
+            <summary>List of Games to Search</summary> 
+                <br>Type the name of the game(s) exactly as they appear on Twitch to search only for streams that are playing those games. 
+                Separate each game name with a single ",". For games that have "," included in their names (e.g. Animals, Aquariums, and Zoos) 
+                place "" around the name.<br>
+                <img src="{{ resp }}" alt="Valid responses"> <br>
+        </details>
+        <details> 
+            <summary>List of Games to Exclude</summary> 
+                <br>Type the name of the game(s) exactly as they appear on Twitch to exclude any streams that are playing those games. 
+                Separate each game name with a single ",". For games that have "," included in their names (e.g. Animals, Aquariums, and Zoos) 
+                place "" around the name.<br> <br>
+        </details>
+        <details> 
+            <summary>Family-Friendly</summary> 
+                <br>Check to enable only Family-Friendly streams to appear. <strong>This may significantly slow down request time</strong>.<br> <br>
+        </details>
+        <details> 
+            <summary>Charity Stream</summary> 
+                <br>Check to enable only Charity streams to appear. <strong>This may significantly slow down request time</strong>.<br> <br>
+        </details>
+        <details> 
+            <summary>Closed Captions</summary> 
+                <br>Check to enable streams with the <i>Closed Captions</i> tag to appear. <strong>This may significantly slow down request time</strong>.<br> <br>
+        </details>
+        <details> 
+            <summary>V-Tuber</summary> 
+                <br>Check to enable only streams with the <i>Vtuber</i> tag to appear.<br> <br>
+        </details>
+        <details> 
+            <summary>No Sponsored Streams</summary> 
+                <br>Check to disable any streams that have "#ad" in their title from appearing.<br> <br>
+        </details>
+        <details> 
+            <summary>Custom Tag</summary> 
+                <br>Enter a Tag ID into the text box to search for only streams with that tag. The Tag ID of a tag can be found by going to the 
+                <a href="https://www.twitch.tv/directory/all" target="_blank" rel="noopener noreferrer">Twitch Browse Live Channels page</a>  
+                and selecting the desired tag in the search bar. The Tag ID will be the last part of the URL. Please note that this feature only 
+                works with Stream Tags and not Game Tags. <br>
+                <br> <img src="{{ tag }}" alt="Where to find Tag ID">
+        </details>
+        <details>
+            <summary>
+                <span title="Minimum Viewer Count">
+                    Minimum Viewer Count
+                </span>
+            </summary>
+                <br>Numeric value with a default = 0. Must be less than <i>Maximum Viewer Count</i>.<br> <br>
+        </details>
+        <details> 
+            <summary>Maximum Viewer Count</summary>
+                <br>Numeric value with a default = 9999999. Must be greater than <i>Minimum Viewer Count</i>.<br> <br>
+        </details>
+        <br>
+    </span>
+</body>
+
+</html>

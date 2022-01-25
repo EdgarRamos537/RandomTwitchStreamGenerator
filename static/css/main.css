@@ -1,0 +1,159 @@
+/* Body Format */
+body{
+    font-family: sans-serif;
+    background-color: rgba(156, 28, 173, 0.13);
+}
+
+/* Input:Numbers field without arrows */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Form Format */
+form{
+  background-color: rgb(137, 53, 148, 0.65);
+  color: rgb(255, 255, 255);
+}
+
+/* Form Container Format */
+.container {
+  display: block;
+  position: relative;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Form Submit Button */
+.submitButton {
+  background-color: #a34cdd;
+  border-radius: 50px;
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* Form Submit Button - Color Change when hovering */
+.submitButton:hover {
+  background-color: #8f38c9;
+}
+
+/* Button Format */
+.button {
+  background-color: #a34cdd;
+  border-radius: 50px;
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* Button Format - Color Change when hovering */
+.button:hover {
+  background-color: #8f38c9;
+}
+/* Center-Align Text */
+.center-align {
+  text-align: center;
+}
+
+/* Textarea Format */
+textarea {
+  resize: none;
+  text-align: center;
+  font-size: 15pt;
+  overflow: hidden;
+}
+
+/* Loader Format */
+.lds-ring {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: none ;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid rgb(255, 255, 255);
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: rgb(0, 0, 0) transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tooltip Message for "Copy Text" */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 15%;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

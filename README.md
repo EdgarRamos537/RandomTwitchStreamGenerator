@@ -76,3 +76,4 @@ Click on _Find Random Stream_ to generate a random Twitch stream URL. Adjust the
 | Max Viewers | Numeric value with a default = 9999999. Must be greater than Minimum Viewer Count. |
 
 ## License
+Distributed under the MIT License. See `LICENSE` for more information.

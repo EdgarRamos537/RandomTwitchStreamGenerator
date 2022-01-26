@@ -221,6 +221,8 @@ def randomStream(gamesIncluded=[], gamesExcluded=[], lang='All', top=200, minVie
     # If gamesData returns None (because game with , had no "" around title or misspelling)
     if gamesData == None:
         return 'Error occurred. Please check spelling and put "" around any game title that includes a comma(,)'
+    else:
+        initialSize = len(gamesData['data'])
     
     # Alters value of top for non-default values of gamesIncluded and gamesExcluded
     if len(gamesIncluded) != 0 or len(gamesExcluded) != 0:
@@ -234,7 +236,7 @@ def randomStream(gamesIncluded=[], gamesExcluded=[], lang='All', top=200, minVie
     # Continually searches for stream that meets the search criteria
     while True:
         # If 200-top Games remain in Games Data, function returns None
-        if len(gamesData['data']) == 200 - top:
+        if len(gamesData['data']) == initialSize - top:
             print('\nSorry, no matches were found.')
             break
     

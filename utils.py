@@ -54,8 +54,8 @@ def noSpaces(string:str):
 
 # Helper Function that returns json data for Games
 def games(gamesIncluded, gamesExcluded):
-    CLIENT_ID = '3n0u7ns1bl3f66srcg9wniavb5ux8a'
-    TOKEN = 'cxaocqux33lvhvlq4ycr6mthprr172'
+    CLIENT_ID = '---'
+    TOKEN = '---'
     PARAMS2 = {
                "Client-Id": CLIENT_ID,
                "Authorization": f"Bearer {TOKEN}"
@@ -215,8 +215,8 @@ def randomStream(gamesIncluded=[], gamesExcluded=[], lang='All', top=200, minVie
                  FF=False, charity=False, notSponsored=False, vtuber=False, CC=False, tag=''):
     gamesData = games(gamesIncluded, gamesExcluded)
     gameCount = 0
-    CLIENT_ID = '3n0u7ns1bl3f66srcg9wniavb5ux8a'
-    TOKEN = 'cxaocqux33lvhvlq4ycr6mthprr172'
+    CLIENT_ID = '---'
+    TOKEN = '---'
     
     # If gamesData returns None (because game with , had no "" around title or misspelling)
     if gamesData == None:
